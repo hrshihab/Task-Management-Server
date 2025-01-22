@@ -5,5 +5,9 @@ export type TUser = {
   password: string;
   role: 'Admin' | 'Owner' | 'Member';
   status: 'Active' | 'Inactive';
+  
  
 };
+
+export type TUserRole = 'Admin' | 'Owner' | 'Member';
+export type TUserStatus = 'Active' | 'Inactive';
