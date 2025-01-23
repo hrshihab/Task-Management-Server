@@ -54,12 +54,12 @@ const auth = (...requiredRoles: TUserRole[]) => {
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(
         httpStatus.UNAUTHORIZED,
-        'You are not authorized  hi!',
+        'You are not authorized  bro !',
       );
     }
 
     req.user = decoded as JwtPayload & { role: string };
-    console.log('middleware',req.user)
+    //console.log('middleware',req.user)
     next();
   });
 };

@@ -16,20 +16,8 @@ const createOrganization = catchAsync(async (req: Request, res: Response) => {
     });
 });
 
-const inviteMembersToOrganization = catchAsync(async (req: Request, res: Response) => {
-    console.log(req.body)
-    const { ...organizationData } = req.body;
-   
-    const result = await OrganizationService.InviteMembersToOrganization(organizationData);
-    sendResponse(res, {
-        statusCode: httpStatus.OK,
-        success: true,
-        message: 'Members invited successfully',
-        data: result,
-    });
-});
+
 
 export const OrganizationController = {
     createOrganization,
-    inviteMembersToOrganization,
 }

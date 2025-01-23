@@ -14,10 +14,7 @@ router.post('/create-organization',
     OrganizationController.createOrganization
 )
 
-router.post('/invite-members-to-organization',
-   //auth(USER_ROLE.Admin as TUserRole),
-    //validateRequest(OrganizationValidation.inviteMembersToOrganizationValidation),
-    OrganizationController.inviteMembersToOrganization
-)
+
+
 
 export const OrganizationRoutes = router;

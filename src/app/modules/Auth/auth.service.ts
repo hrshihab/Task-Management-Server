@@ -64,17 +64,13 @@ const refreshToken = async (token: string) => {
   const { userId, iat } = decoded;
 
   // checking if the user is exist
-    const user = await User.isUserExistsByCustomEmail(userId) as TUser | null;
+    const user = await User.isUserExistsByCustomId(userId) as TUser | null;
   
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
   // checking if the user is already deleted
-  const isDeleted = user?.isDeleted;
 
-  if (isDeleted) {
-    throw new AppError(httpStatus.FORBIDDEN, 'This user is deleted !');
-  }
 
   // checking if the user is blocked
   const userStatus = user?.status;
@@ -83,12 +79,7 @@ const refreshToken = async (token: string) => {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
   }
 
-  if (
-    user.passwordChangedAt &&
-    User.isJWTIssuedBeforePasswordChanged(user.passwordChangedAt, iat as number)
-  ) {
-    throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
-  }
+ 
 
   const jwtPayload = {
     userId: user._id,

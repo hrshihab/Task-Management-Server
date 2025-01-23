@@ -7,14 +7,5 @@ export type TOrganization = {
 
 };
 
-export type TOrganizationMember = {
-  email: string;
-  status: "pending" | "accepted" | "rejected";
-}
-
-export type TInviteMembersToOrganization = {
-  members: TOrganizationMember[];
-  organization: Types.ObjectId;
-}
 
 

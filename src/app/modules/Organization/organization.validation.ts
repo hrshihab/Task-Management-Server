@@ -9,19 +9,7 @@ const createOrganizationValidation = z.object({
   }).strict(),
 });
 
-const inviteMembersToOrganizationValidation = z.object({
-  body: z.object({
-    members: z.array(z.object({
-      email: z.string().email(),
-      status: z.enum(["pending", "accepted", "rejected"]),
-    })),
-    organization: z.string().refine((val) => isValidObjectId(val), {
-      message: "Invalid ObjectId",
-    }),
-  }),
-});
 
 export const OrganizationValidation = {
   createOrganizationValidation,
-  inviteMembersToOrganizationValidation,
 };
