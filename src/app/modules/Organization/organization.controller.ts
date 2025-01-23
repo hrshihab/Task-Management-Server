@@ -5,7 +5,7 @@ import { Request, Response } from "express";
 import sendResponse from "../../utils/sendResponse";
 
 const createOrganization = catchAsync(async (req: Request, res: Response) => {
-    console.log(req.body)
+    //console.log('controller',req.body)
     const { ...organizationData } = req.body;
     const result = await OrganizationService.createOrganizationInDB(organizationData);
     sendResponse(res, {

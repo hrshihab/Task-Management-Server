@@ -10,11 +10,12 @@ export const Organization = model<TOrganization>('Organization', organizationSch
 
 
 const inviteMembersToOrganizationSchema = new Schema<TInviteMembersToOrganization>({
+  organization: { type: Schema.Types.ObjectId, ref: 'Organization', required: true,unique:true },
   members: [{
     email: { type: String, required: true },
     status: { type: String, enum: ['pending', 'accepted', 'rejected'], default: 'pending' }
   }],
-  organization: { type: Schema.Types.ObjectId, ref: 'Organization', required: true },
+  
 });
 
 export const Invitation = model<TInviteMembersToOrganization>('Invitation', inviteMembersToOrganizationSchema);
