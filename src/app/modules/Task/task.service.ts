@@ -4,6 +4,7 @@ import { TTask } from './task.interface';
 import { Task, GroupTask } from './task.model';
 import AppError from '../../errors/AppError';
 import httpStatus from 'http-status';
+import { compareSync } from 'bcrypt';
 
 const createTask = async (task: TTask) => {
   // Check for existing task with the same title and organization
@@ -131,11 +132,19 @@ const completeTask = async (taskId: string, userId: any, taskDetails?: string) =
   // Find the task by ID and ensure the user is assigned to it
   const task = await GroupTask.findOne({
     _id: taskId,
-    
   });
 
   if (!task) {
     throw new AppError(httpStatus.NOT_FOUND, 'Task not found or not assigned to user');
+  }
+
+  console.log(task.deadline);
+  console.log(new Date());
+
+  // Validate that the task's deadline has not passed
+  const currentDate = new Date();
+  if (new Date(task.deadline) < currentDate) {
+    throw new AppError(httpStatus.BAD_REQUEST, 'Cannot complete a task past its deadline');
   }
 
   // Perform plagiarism check (this is a placeholder for actual logic)
