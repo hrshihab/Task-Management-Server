@@ -109,7 +109,7 @@ const getTask = async (userId: any, priority?: string) => {
     (invitation) => invitation.organization,
   );
 
-  // Build the query object
+  // Build the query object for group task
   const query: any = {
     organizationId: { $in: organizationIds },
     'assignedTo.userId': userId,
@@ -138,8 +138,8 @@ const completeTask = async (taskId: string, userId: any, taskDetails?: string) =
     throw new AppError(httpStatus.NOT_FOUND, 'Task not found or not assigned to user');
   }
 
-  console.log(task.deadline);
-  console.log(new Date());
+  //console.log(task.deadline);
+  //console.log(new Date());
 
   // Validate that the task's deadline has not passed
   const currentDate = new Date();
