@@ -8,13 +8,11 @@ import { TUserRole } from '../user/user.interface';
 
 const router = Router();
 
-router.post('/create-organization',
-    auth(USER_ROLE.Admin as TUserRole),
-    validateRequest(OrganizationValidation.createOrganizationValidation),
-    OrganizationController.createOrganization
-)
-
-
-
+router.post(
+  '/create-organization',
+  auth(USER_ROLE.Admin as TUserRole),
+  validateRequest(OrganizationValidation.createOrganizationValidation),
+  OrganizationController.createOrganization,
+);
 
 export const OrganizationRoutes = router;

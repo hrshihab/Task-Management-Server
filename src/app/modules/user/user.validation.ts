@@ -13,11 +13,8 @@ const userValidationSchema = z.object({
   //   })
   //   .max(20, { message: 'Password can not be more than 20 characters' })
   //   .optional(),
-
   // role: z.enum(['Admin', 'Owner', 'Member'] as const).optional(),
-  // status: z.enum(['Active', 'Inactive'] as const).optional(), 
-
-
+  // status: z.enum(['Active', 'Inactive'] as const).optional(),
 });
 
 export const UserValidation = {

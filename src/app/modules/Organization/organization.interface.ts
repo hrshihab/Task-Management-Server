@@ -1,11 +1,6 @@
-import { Types } from "mongoose";
+import { Types } from 'mongoose';
 
 export type TOrganization = {
   name: string;
-  owner:Types.ObjectId;
-  
-
+  owner: Types.ObjectId;
 };
-
-
-

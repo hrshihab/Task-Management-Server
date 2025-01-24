@@ -7,23 +7,24 @@ import { TUserRole } from '../user/user.interface';
 import { InvitationController } from './Invitation.controller';
 const router = Router();
 
+router.post(
+  '/invite-members',
+  auth(USER_ROLE.Admin as TUserRole),
+  validateRequest(InvitationValidation.inviteMembersToOrganizationValidation),
+  InvitationController.inviteMembersToOrganization,
+);
 
+router.get(
+  '/:invitationId',
+  auth(USER_ROLE.Admin as TUserRole, USER_ROLE.Owner as TUserRole),
+  InvitationController.getInvitationById,
+);
 
-router.post('/invite-members',
-   auth(USER_ROLE.Admin as TUserRole),
-    validateRequest(InvitationValidation.inviteMembersToOrganizationValidation),
-    InvitationController.inviteMembersToOrganization
-)
-
-router.get('/:invitationId',
-    auth(USER_ROLE.Admin as TUserRole,USER_ROLE.Owner as TUserRole),
-    InvitationController.getInvitationById
-)
-
-router.patch('/:invitationId/update-status',
-    auth(USER_ROLE.Member as TUserRole),
-    validateRequest(InvitationValidation.updateInvitationStatusValidation),
-    InvitationController.updateInvitationStatus 
-)
+router.patch(
+  '/:invitationId/update-status',
+  auth(USER_ROLE.Member as TUserRole),
+  validateRequest(InvitationValidation.updateInvitationStatusValidation),
+  InvitationController.updateInvitationStatus,
+);
 
 export const InvitationRoutes = router;

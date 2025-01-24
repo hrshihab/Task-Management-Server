@@ -22,17 +22,15 @@ const auth = (...requiredRoles: TUserRole[]) => {
       config.jwt_access_secret as string,
     ) as JwtPayload;
 
-    const { role, userId, iat } = decoded;
+    const { role, userId } = decoded;
 
     // checking if the user is exist
-      const user = await User.isUserExistsByCustomId(userId);
+    const user = await User.isUserExistsByCustomId(userId);
 
     if (!user) {
       throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
     }
     // checking if the user is already deleted
-
-
 
     // checking if the user is blocked
     const userStatus = user?.status;
@@ -41,15 +39,15 @@ const auth = (...requiredRoles: TUserRole[]) => {
       throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
     }
 
-    if (
-      user.passwordChangedAt &&
-      User.isJWTIssuedBeforePasswordChanged(
-        user.passwordChangedAt,
-        iat as number,
-      )
-    ) {
-      throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
-    }
+    // if (
+    //   user.passwordChangedAt &&
+    //   User.isJWTIssuedBeforePasswordChanged(
+    //     user.passwordChangedAt,
+    //     iat as number,
+    //   )
+    // ) {
+    //   throw new AppError(httpStatus.UNAUTHORIZED, 'You are not authorized !');
+    // }
 
     if (requiredRoles && !requiredRoles.includes(role)) {
       throw new AppError(

@@ -1,4 +1,3 @@
-import bcrypt from 'bcrypt';
 import httpStatus from 'http-status';
 import config from '../../config';
 import AppError from '../../errors/AppError';
@@ -9,13 +8,12 @@ import { TUser } from '../user/user.interface';
 
 const loginUser = async (payload: TLoginUser) => {
   // checking if the user exists
-  const user = await User.isUserExistsByCustomEmail(payload.email) as TUser ;
+  const user = (await User.isUserExistsByCustomEmail(payload.email)) as TUser;
 
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
-  }   
+  }
   // checking if the user is already deleted
-
 
   // checking if the user is blocked
 
@@ -55,22 +53,19 @@ const loginUser = async (payload: TLoginUser) => {
   };
 };
 
-
-
 const refreshToken = async (token: string) => {
   // checking if the given token is valid
   const decoded = verifyToken(token, config.jwt_refresh_secret as string);
 
-  const { userId, iat } = decoded;
+  const { userId } = decoded;
 
   // checking if the user is exist
-    const user = await User.isUserExistsByCustomId(userId) as TUser | null;
-  
+  const user = (await User.isUserExistsByCustomId(userId)) as TUser | null;
+
   if (!user) {
     throw new AppError(httpStatus.NOT_FOUND, 'This user is not found !');
   }
   // checking if the user is already deleted
-
 
   // checking if the user is blocked
   const userStatus = user?.status;
@@ -78,8 +73,6 @@ const refreshToken = async (token: string) => {
   if (userStatus === 'Inactive') {
     throw new AppError(httpStatus.FORBIDDEN, 'This user is blocked ! !');
   }
-
- 
 
   const jwtPayload = {
     userId: user._id,
@@ -97,9 +90,7 @@ const refreshToken = async (token: string) => {
   };
 };
 
-
 export const AuthServices = {
   loginUser,
   refreshToken,
-  
 };
